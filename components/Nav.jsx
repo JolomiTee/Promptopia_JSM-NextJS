@@ -9,12 +9,13 @@ import { set } from 'mongoose'
 const Nav = () => {
     const [providers, setProviders] = useState(null)
     const [toggleDropdown, setToggleDropdown] = useState(false)
+
     useEffect(() => {
-      const setProviders = async () => {
-        const response = await getProviders()
-        setProviders(response)
-      }
-      setProviders()
+        const setProviders = async () => {
+            const response = await getProviders()
+            setProviders(response)
+        }
+        setProviders()
     }, [])
 
     const isUserLoggedIn = true
@@ -46,20 +47,20 @@ const Nav = () => {
                     </div>
                 ) : (
                     <>
-                    {
-                        providers &&
-                        Object.values(providers).map((provider) => (
+                        {
+                            providers &&
+                            Object.values(providers).map((provider) => (
 
-                    <button
-                            type='button'
-                            key={provider.name}
-                            onClick={signIn(provider.Id)}
-                            className="outline_btn"
-                        >
-                            Sign in
-                        </button>
-                        ))
-                    }
+                                <button
+                                    type='button'
+                                    key={provider.name}
+                                    onClick={signIn(provider.Id)}
+                                    className="black_btn"
+                                >
+                                    Sign in
+                                </button>
+                            ))
+                        }
                     </>
                 )
                 }
@@ -71,47 +72,47 @@ const Nav = () => {
                         <Image src="/assets/images/logo.svg"
                             width={37}
                             height={37}
-                            className='rounded-full'
+                            className='rounded-full cursor-pointer'
                             alt='profile'
                             onClick={() => setToggleDropdown((prev) => !prev)}
                         />
                         {toggleDropdown && <div className='dropdown'>
-                                <Link
+                            <Link
                                 href="/profile"
                                 className='dropdown_link'
                                 onClick={() => setToggleDropdown(false)}>
-                                    My Profile
-                                </Link>
-                                <Link
+                                My Profile
+                            </Link>
+                            <Link
                                 href="/create-prompt"
                                 className='dropdown_link'
                                 onClick={() => setToggleDropdown(false)}>
-                                    Create Prompt
-                                </Link>
-                                <button type="button" className='mt-5 w-full black_btn' onClick={() => {
-                                    setToggleDropdown(false)
-                                    signOut()
-                                }}>
-                                    Sign Out
-                                </button>
-                            </div>}
+                                Create Prompt
+                            </Link>
+                            <button type="button" className='mt-5 w-full black_btn' onClick={() => {
+                                setToggleDropdown(false)
+                                signOut()
+                            }}>
+                                Sign Out
+                            </button>
+                        </div>}
                     </div>
                 ) : (
                     <>
-                    {
-                        providers &&
-                        Object.values(providers).map((provider) => (
+                        {
+                            providers &&
+                            Object.values(providers).map((provider) => (
 
-                    <button
-                            type='button'
-                            key={provider.name}
-                            onClick={signIn(provider.Id)}
-                            className="outline_btn"
-                        >
-                            Sign in
-                        </button>
-                        ))
-                    }
+                                <button
+                                    type='button'
+                                    key={provider.name}
+                                    onClick={signIn(provider.Id)}
+                                    className="black_btn"
+                                >
+                                    Sign in
+                                </button>
+                            ))
+                        }
                     </>
                 )}
             </div>
