@@ -8,18 +8,22 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import Logo from '../public/assets/images/logo.svg'
 
 const Navbar = () => {
-    const [userLoggedIn, setUserLoggedIn] = useState(true)
+
+    const {data: session} = useSession()
+
     const [providers, setProviders] = useState(null)
     const [toggleDropdown, setToggleDropdown] = useState(false)
+    console.log(providers)
+    console.log(session)
 
     useEffect(() => {
-        const setProviders = async () => {
+        const setNewProviders = async () => {
             const response = await getProviders()
 
             setProviders(response)
         }
 
-        setProviders()
+        setNewProviders()
     }, [])
 
 
@@ -30,8 +34,9 @@ const Navbar = () => {
                 <p className="logo_text">Promptopia</p>
             </Link>
 
+            {/* Desktop Nav */}
             <div className="sm:flex hidden">
-                {userLoggedIn ? (
+                {session ? (
                     <div className="flex gap-3 md:gap-5">
                         <Link href='/create-prompt' className="black_btn">
                             Create Post
@@ -42,14 +47,14 @@ const Navbar = () => {
                         </button>
 
                         <Link href='/profile'>
-                            <Image src='/assets/images/profile.svg' width={37} height={37} className="rounded-full" alt="profile" />
+                            <Image src={session?.user.image} width={37} height={37} className="rounded-full" alt="profile" />
                         </Link>
                     </div>
                 ) : (
                     <>
                         {
                             providers && Object.values(providers).map((provider) => (
-                                <button type="button" key={provider.name} onClick={signIn(provider.id)} className="black_btn">
+                                <button type="button" key={provider.name} onClick={() => signIn(provider.id)} className="black_btn">
                                     Sign In
                                 </button>
                             ))
@@ -60,9 +65,9 @@ const Navbar = () => {
 
             {/* Mobile nav */}
             <div className="sm:hidden flex relative">
-                {userLoggedIn ? (
+                {session ? (
                     <div className="flex">
-                        <Image src={Logo} width={37} height={37} className="rounded-full" alt="profile" onClick={() => {setToggleDropdown((prev) => !prev)}} />
+                        <Image src={session?.user.image} width={37} height={37} className="rounded-full" alt="profile" onClick={() => {setToggleDropdown((prev) => !prev)}} />
 
                         {toggleDropdown && (
                             <div className="dropdown">
@@ -73,7 +78,14 @@ const Navbar = () => {
                                     Create Prompt
                                 </Link>
 
-                                <button className="mt-5 w-full black_btn" type="button" onClick={() => {setToggleDropdown(false)}}>
+                                <button
+                                    className="mt-5 w-full black_btn"
+                                    type="button"
+                                    onClick={() => {
+                                        setToggleDropdown(false);
+                                        signOut()
+                                    }}
+                                >
                                     Sign Out
                                 </button>
                             </div>
@@ -83,7 +95,7 @@ const Navbar = () => {
                     <>
                         {
                             providers && Object.values(providers).map((provider) => (
-                                <button type="button" key={provider.name} onClick={signIn(provider.id)} className="black_btn">
+                                <button type="button" key={provider.name} onClick={() => signIn(provider.id)} className="black_btn">
                                     Sign In
                                 </button>
                             ))
