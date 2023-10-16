@@ -25,14 +25,14 @@ const Feed = () => {
     const handleSearchChange = (e) => {
     }
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            const response = await fetch('/api/prompt')
-            console.log(response)
-            const data = await response.json();
+    const fetchPost = async () => {
+        const response = await fetch('/api/prompt')
+        console.log(response)
+        const data = await response.json();
 
-            setPosts(data)
-        }
+        setPosts(data)
+    }
+    useEffect(() => {
         fetchPost()
 
     }, [])
