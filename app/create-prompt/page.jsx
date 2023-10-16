@@ -6,7 +6,7 @@ import Form from "@components/Form"
 
 const CreatePrompt = () => {
     const router = useRouter()
-    const {data: session} = useSession
+    const { data: session } = useSession()
     const [submitting, setSubmitting] = useState(false)
     const [post, setPost] = useState({
         prompt: '',
@@ -24,7 +24,7 @@ const CreatePrompt = () => {
                     tag: post.tag
                 })
             })
-            if (response.ok){
+            if (response.ok) {
                 router.push('/')
             }
         } catch (error) {
