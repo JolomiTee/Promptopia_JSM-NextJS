@@ -10,21 +10,15 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     const [copy, setCopy] = useState("")
     const { data: session } = useSession()
 
-    useEffect(() => {
-        console.log(session)
-        console.log(post)
-
-    }, [])
-
-
     const handleCopy = () => {
         setCopy(port.prompt)
         navigator.clipboard.writeText(post.prompt)
         setTimeout(() => setCopy(""), 3000);
     }
+    
     return (
         <div className="prompt_card">
-            
+
             <div className="flex justify-between items-start gap-5">
                 <div className="flex-1 flex-start items-center gap-3 cursor-pointer">
                     <Image
@@ -56,12 +50,13 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             <p className="my-4 font-satoshi text-sm text-gray-700">
                 {post.prompt}
             </p>
-            <p
+            <button
+                title={`Prompts with the ${post.tag} tag`}
                 className="font-inter text-sm blue_gradient cursor-pointer py-2 px-3 shadow-md w-fit rounded-[20px] font-bold"
                 onClick={() => handleTagClick && handleTagClick(post.tag)}
             >
                 #{post.tag}
-            </p>
+            </button>
 
             {
                 session?.user.id === post.creator._id && pathName === '/profile' && (
