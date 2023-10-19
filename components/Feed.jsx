@@ -35,6 +35,7 @@ const Feed = () => {
     }
 
     const handleSearchChange = (e) => {
+        e.preventDefault()
         clearTimeout(searchTimeout)
         setSearchText(e.target.value)
 
