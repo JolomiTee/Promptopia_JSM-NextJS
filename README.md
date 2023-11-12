@@ -35,12 +35,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 THINGS TO IMPLEMENT VIA PULL REQUESTS
 
-[] Implement Search
-
-    - Search by prompt
-    - Search by Tag
-    - Search by Username
-    
-[] Implement Click on tag
-
 [] Implement View others profile
